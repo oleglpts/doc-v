@@ -1,0 +1,25 @@
+version: "2.1"
+
+services:
+  mysql_server:
+    image: "slacktomcat/docv-mysql:latest"
+    container_name: mysql
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ 'CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh' ]
+      interval: 15s
+      timeout: 5s
+      retries: 60
+
+  doc_v:
+    image: "slacktomcat/docv:latest"
+    container_name: docv
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql_server:
+        condition: service_healthy

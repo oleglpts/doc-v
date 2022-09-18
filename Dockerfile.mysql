@@ -1,0 +1,9 @@
+FROM bitnami/mysql:latest
+
+WORKDIR /app
+COPY doc-v.linux.tar.gz /app/doc-v.linux.tar.gz
+EXPOSE 8080
+EXPOSE 3306
+USER 1001
+ENTRYPOINT [ "/opt/bitnami/scripts/mysql/entrypoint.sh" ]
+CMD [ "/opt/bitnami/scripts/mysql/run.sh" ]
